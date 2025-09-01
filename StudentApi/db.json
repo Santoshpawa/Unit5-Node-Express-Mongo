@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Aarav Sharma",
+    "course": "Full Stack Web",
+    "batch": "April 2025"
+  },
+  {
+    "id": 2,
+    "name": "Mani R",
+    "course": "Full Stack Web",
+    "batch": "April 2025"
+  },
+  {
+    "id": 3,
+    "name": "Santosh",
+    "course": "Full Stack Java Developer",
+    "batch": "April 2025"
+  }
+]
