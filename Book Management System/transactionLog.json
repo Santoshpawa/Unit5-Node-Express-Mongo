@@ -1,0 +1,8 @@
+[
+  { "bookTitle": "Kite Runner", "issuedOn": "2025-9-5" },
+  {
+    "bookTitle": "The Boy Who Loved",
+    "borrowedBy": "Santosh",
+    "issuedOn": "2025-9-5"
+  }
+]
