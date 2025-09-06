@@ -1,0 +1,21 @@
+Query :
+
+1. testDB> db.recipe.find({cuisine: "Italian"})
+2. db.recipe.find({prep_time:{$lt : 30}})
+3. db.recipe.find({price:{$gt: 500}})
+4. db.recipe.find().sort({price: 1})
+5. db.recipe.updateOne({recipe_id:2},{$set:{price: 900}})
+6. db.recipe.find({},{name:1, price:1, _id:0})
+7. db.recipe.find({difficulty: "medium", price : {$lt : 600}})
+8. db.recipe.find().sort({prep_time : -1});
+9. db.recipe.insertOne({ recipe_id: 11,name: "Chocolate Cake",ingredients: ["Flour", "Sugar", "Cocoa","Powder","Eggs", "Butter"],cuisine: "American",prep_time: 50,difficulty: "medium", price: 750})
+10. db.recipe.deleteOne({recipe_id: 4})
+11. db.recipe.find({cuisine: {$in : ["Japanese", "Thai"]}})
+12. db.recipe.find({ingredients: "Egg"})
+13. db.recipe.updateOne({recipe_id: 7},{$set:{prep_time: 35}})
+14. db.recipe.deleteMany({price: {$gt: 1000}})
+15. db.recipe.find().limit(3)
+16. db.recipe.find().skip(2)
+17. db.recipe.find({cuisine: "Thai"}).sort({price: -1})
+19. db.recipe.countDocuments({difficulty: "easy"})
+20. db.recipe.find({prep_time: {$gt: 40}})
