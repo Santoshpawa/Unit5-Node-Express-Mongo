@@ -1,0 +1,8 @@
+Query I wrote on MongoDB shell
+
+1. db.users.find({order_status : "shippped"})
+2. db.users.updateOne({"order_id": 1},{$set:{"total_amount": 70000}})
+3. db.users.deleteOne({order_id: 4})
+4. db.users.findOne({customer_name: "Alice Johnson"})
+5. db.users.updateOne({order_id: 2},{$set:{order_status: "delivered"}})
+6. db.users.find({total_amount:{$gte: 15000}})
