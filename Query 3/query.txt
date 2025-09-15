@@ -1,0 +1,66 @@
+// 1. Calculate the total sales amount for each product category.
+db.sales.aggregate([
+  { $group: { _id: "$category", totalSales: { $sum: "$amount" } } }
+]);
+
+// 2. Determine the month-wise total sales amount.
+db.sales.aggregate([
+  {
+    $group: {
+      _id: { $substr: ["$date", 0, 7] }, // YYYY-MM
+      totalSales: { $sum: "$amount" }
+    }
+  },
+  { $sort: { "_id": 1 } }
+]);
+
+// 3. Identify the highest-selling product (by revenue).
+db.sales.aggregate([
+  { $group: { _id: "$product", revenue: { $sum: "$amount" } } },
+  { $sort: { revenue: -1 } },
+  { $limit: 1 }
+]);
+
+// 4. Find the average sale amount across all transactions.
+db.sales.aggregate([
+  { $group: { _id: null, avgSale: { $avg: "$amount" } } }
+]);
+
+// 5. Count the number of sales made in each month.
+db.sales.aggregate([
+  {
+    $group: {
+      _id: { $substr: ["$date", 0, 7] }, // YYYY-MM
+      salesCount: { $sum: 1 }
+    }
+  },
+  { $sort: { "_id": 1 } }
+]);
+
+// 6. Determine the total sales per region.
+db.sales.aggregate([
+  { $group: { _id: "$region", totalSales: { $sum: "$amount" } } }
+]);
+
+// 7. Identify the top 3 highest revenue-generating products.
+db.sales.aggregate([
+  { $group: { _id: "$product", revenue: { $sum: "$amount" } } },
+  { $sort: { revenue: -1 } },
+  { $limit: 3 }
+]);
+
+// 8. Find the total number of sales transactions per category.
+db.sales.aggregate([
+  { $group: { _id: "$category", salesCount: { $sum: 1 } } }
+]);
+
+// 9. Determine the average sales amount for each region.
+db.sales.aggregate([
+  { $group: { _id: "$region", avgSale: { $avg: "$amount" } } }
+]);
+
+// 10. Find the total sales for Electronics and Fashion categories separately.
+db.sales.aggregate([
+  { $match: { category: { $in: ["Electronics", "Fashion"] } } },
+  { $group: { _id: "$category", totalSales: { $sum: "$amount" } } }
+]);
