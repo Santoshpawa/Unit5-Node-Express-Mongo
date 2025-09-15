@@ -1,0 +1,92 @@
+// 1. Top 3 best-selling products by quantity sold
+db.orders.aggregate([
+  {
+    $group: { _id: "$productName", totalQuantity: { $sum: "$quantity" } }
+  },
+  { $sort: { totalQuantity: -1 } },
+  { $limit: 3 }
+]);
+
+// 2. Total revenue for each product category
+db.orders.aggregate([
+  {
+    $group: { _id: "$category", totalRevenue: { $sum: "$totalPrice" } }
+  }
+]);
+
+// 3. Average total price of all orders
+db.orders.aggregate([
+  { $group: { _id: null, avgPrice: { $avg: "$totalPrice" } } }
+]);
+
+// 4. Number of orders placed each month
+db.orders.aggregate([
+  {
+    $group: {
+      _id: { month: { $month: { $toDate: "$orderDate" } }, year: { $year: { $toDate: "$orderDate" } } },
+      totalOrders: { $sum: 1 }
+    }
+  },
+  { $sort: { "_id.year": 1, "_id.month": 1 } }
+]);
+
+// 5. Percentage of canceled orders
+db.orders.aggregate([
+  {
+    $group: {
+      _id: null,
+      totalOrders: { $sum: 1 },
+      cancelled: { $sum: { $cond: [{ $eq: ["$status", "Cancelled"] }, 1, 0] } }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      cancelledPercentage: { $multiply: [{ $divide: ["$cancelled", "$totalOrders"] }, 100] }
+    }
+  }
+]);
+
+// 6. Top product category by revenue
+db.orders.aggregate([
+  {
+    $group: { _id: "$category", totalRevenue: { $sum: "$totalPrice" } }
+  },
+  { $sort: { totalRevenue: -1 } },
+  { $limit: 1 }
+]);
+
+// 7. Most frequently ordered product
+db.orders.aggregate([
+  {
+    $group: { _id: "$productName", count: { $sum: 1 } }
+  },
+  { $sort: { count: -1 } },
+  { $limit: 1 }
+]);
+
+// 8. Monthly revenue trend
+db.orders.aggregate([
+  {
+    $group: {
+      _id: { month: { $month: { $toDate: "$orderDate" } }, year: { $year: { $toDate: "$orderDate" } } },
+      totalRevenue: { $sum: "$totalPrice" }
+    }
+  },
+  { $sort: { "_id.year": 1, "_id.month": 1 } }
+]);
+
+// 9. Count of orders by status
+db.orders.aggregate([
+  {
+    $group: { _id: "$status", totalOrders: { $sum: 1 } }
+  }
+]);
+
+// 10. Total number of orders and quantity sold
+db.orders.aggregate([
+  {
+    $group: {
+      _id: null,
+      totalOrders: { $sum: 1 },
+      totalQuantity: { $su
