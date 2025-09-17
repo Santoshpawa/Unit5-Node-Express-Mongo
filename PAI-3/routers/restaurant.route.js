@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAllRestaurant, addNewRestaurant } = require("../controllers/restaurant.controller");
+const { getAllRestaurant, addNewRestaurant, getRestaurantById, updateRestaurantById, addReview, getAllReviewsByRestaurantId, deleteReviewById } = require("../controllers/restaurant.controller");
 
 const restaurantsRouter = express.Router();
 
@@ -10,7 +10,23 @@ restaurantsRouter.get("/", getAllRestaurant);
 restaurantsRouter.post("/", addNewRestaurant);
 
 // get restaurant with id
-restaurantsRouter.post("/:id", getRestaurantById);
+restaurantsRouter.get("/:id", getRestaurantById);
+
+// update restaurant with id
+restaurantsRouter.patch("/:id", updateRestaurantById);
+
+
+
+//for reviews
+//addding review 
+restaurantsRouter.post("/:id/reviews", addReview);
+
+// geting all reviews
+restaurantsRouter.get("/:id/reviews", getAllReviewsByRestaurantId);
+
+// delete review
+restaurantsRouter.delete("/reviews/:id", deleteReviewById);
+
 
 
 module.exports = restaurantsRouter;

@@ -10,11 +10,10 @@ app.use(express.json());
 // restaurants end point
 app.use("/restaurants", restaurantsRouter);
 
-
 // for handling undefined routes
-app.use((req,res)=>{
-    res.status(404).json({msg: "Undefined Route"})
-})
+app.use((req, res) => {
+  res.status(404).json({ msg: "Undefined Route" });
+});
 
 connectToDb().then(() => {
   app.listen(process.env.Port, () => {
